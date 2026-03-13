@@ -1,6 +1,7 @@
 package io.github.HugoPinto.rest;
 
 import io.github.HugoPinto.dto.AlunoDto;
+import io.github.HugoPinto.dto.ProfessorDto;
 import io.github.HugoPinto.facade.AlunoFacade;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -10,7 +11,7 @@ import jakarta.ws.rs.core.UriInfo;
 
 import java.util.List;
 
-@Path("/alunos")
+@Path("/aluno")
 @Produces(MediaType.APPLICATION_JSON)
 public class AlunoRest {
 
@@ -36,7 +37,7 @@ public class AlunoRest {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("criar")
+    @Path("/criar")
     public Response criarAluno(AlunoDto aluno){
         if (aluno == null) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -76,10 +77,14 @@ public class AlunoRest {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<AlunoDto> listarTodosAlunos(){
-        return alunoFacade.listarTodosAlunos();
-    }
+    public Response listarTodosAlunos(){
+        List<AlunoDto> alunos = alunoFacade.listarTodosAlunos();
 
+        if(alunos != null){
+            return Response.ok(alunos).build();
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }
 
 

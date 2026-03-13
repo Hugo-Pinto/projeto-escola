@@ -2,6 +2,7 @@ package io.github.HugoPinto.facade;
 
 import io.github.HugoPinto.dao.AlunoDao;
 import io.github.HugoPinto.dto.AlunoDto;
+import io.github.HugoPinto.dto.ProfessorDto;
 import io.github.HugoPinto.exception.AlunoNaoEncontradoException;
 import io.github.HugoPinto.model.AlunoModel;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -45,6 +46,7 @@ public class AlunoFacade {
             criarAluno.setNome(aluno.getNome());
             criarAluno.setIdade(aluno.getIdade());
             criarAluno.setCurso(aluno.getCurso());
+            criarAluno.setEmail(aluno.getEmail());
 
             //Armazena na DAO, a model do aluno criado
             alunoDao.persist(criarAluno);
@@ -67,12 +69,15 @@ public class AlunoFacade {
         //Se o aluno não existe, lançar exceção.
         if(alunoModel != null){
             log.info("Excluindo aluno de id: {}", id);
+
+            //Criamos este DTO apenas para exibir os dados na response, após apagar o objeto aluno na model. É apenas uma cópia temporária.
             AlunoDto alunoDto = new AlunoDto();
             //seta os dados do DTO que foram passados no body para a model
             alunoDto.setNome(alunoModel.getNome());
             alunoDto.setIdade(alunoModel.getIdade());
             alunoDto.setCurso(alunoModel.getCurso());
             alunoDto.setId(alunoModel.getId());
+            alunoDto.setEmail(alunoModel.getEmail());
 
             //Exclui o Aluno da model
             alunoDao.delete(alunoModel);
@@ -86,13 +91,9 @@ public class AlunoFacade {
     }
 
     public List<AlunoDto> listarTodosAlunos(){
-        var listarAlunos = new ArrayList<AlunoDto>();
-
-        var listarAlunosEntity = alunoDao.listAll();
-
-        for(AlunoModel alunoModel: listarAlunosEntity){
-            listarAlunos.add(new AlunoDto(alunoModel));
-        }
-        return listarAlunos;
+        return alunoDao.listAll()
+                .stream()
+                .map(AlunoDto::new)
+                .toList();
     }
 }

@@ -1,15 +1,16 @@
 package io.github.HugoPinto.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
-public class AlunoModel{
+public class ProfessorModel {
     @Id
     @GeneratedValue
     private Long id;
@@ -17,6 +18,10 @@ public class AlunoModel{
     private String email;
     private String cpf;
     private String matricula;
-    private int idade;
-    private String curso;
+    private LocalDate dataNascimento;
+    private String titulacao;
+    private String areaAtuacao;
+    private boolean ativo = true;
+    private List<Long> turmas;
+    private List<String> disciplinas;
 }
