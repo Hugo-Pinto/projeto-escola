@@ -1,5 +1,6 @@
 package io.github.HugoPinto.dto;
 
+import io.github.HugoPinto.facade.AlunoFacade;
 import io.github.HugoPinto.model.AlunoModel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
