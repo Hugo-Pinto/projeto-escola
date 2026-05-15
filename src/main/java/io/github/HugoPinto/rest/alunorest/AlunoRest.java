@@ -1,8 +1,7 @@
-package io.github.HugoPinto.rest;
+package io.github.HugoPinto.rest.alunorest;
 
-import io.github.HugoPinto.dto.AlunoDto;
-import io.github.HugoPinto.dto.ProfessorDto;
-import io.github.HugoPinto.facade.AlunoFacade;
+import io.github.HugoPinto.dto.alunodto.AlunoDto;
+import io.github.HugoPinto.facade.alunofacade.AlunoFacade;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

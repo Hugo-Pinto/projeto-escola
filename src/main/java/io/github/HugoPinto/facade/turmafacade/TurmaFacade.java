@@ -1,10 +1,9 @@
-package io.github.HugoPinto.facade;
+package io.github.HugoPinto.facade.turmafacade;
 
 
 import io.github.HugoPinto.dao.TurmaDao;
-import io.github.HugoPinto.dto.TurmaDto;
-import io.github.HugoPinto.exception.TurmaNaoEncontradaException;
-import io.github.HugoPinto.model.TurmaModel;
+import io.github.HugoPinto.dto.turmadto.TurmaDto;
+import io.github.HugoPinto.model.turmamodel.TurmaModel;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -17,8 +16,13 @@ public class TurmaFacade {
     @Inject
     TurmaDao turmaDao;
 
+
+    public TurmaDto executar(TurmaDto turmaDto){
+        return cadastrarTurma(turmaDto);
+    }
+
     @Transactional
-    public TurmaDto cadastrarTurma(TurmaDto turmaDto){
+    private TurmaDto cadastrarTurma(TurmaDto turmaDto){
         if(turmaDto != null){
             var turma = new TurmaModel();
 

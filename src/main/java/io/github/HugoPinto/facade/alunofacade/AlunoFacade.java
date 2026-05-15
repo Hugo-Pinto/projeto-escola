@@ -1,14 +1,12 @@
-package io.github.HugoPinto.facade;
+package io.github.HugoPinto.facade.alunofacade;
 
-import io.github.HugoPinto.dao.AlunoDao;
-import io.github.HugoPinto.dto.AlunoDto;
-import io.github.HugoPinto.dto.ProfessorDto;
+import io.github.HugoPinto.dao.alunodao.AlunoDao;
+import io.github.HugoPinto.dto.alunodto.AlunoDto;
 import io.github.HugoPinto.exception.AlunoNaoEncontradoException;
-import io.github.HugoPinto.model.AlunoModel;
+import io.github.HugoPinto.model.alunomodel.AlunoModel;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;

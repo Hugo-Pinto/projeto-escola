@@ -1,7 +1,6 @@
-package io.github.HugoPinto.dto;
+package io.github.HugoPinto.dto.turmadto;
 
 import io.github.HugoPinto.enums.Semestre;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

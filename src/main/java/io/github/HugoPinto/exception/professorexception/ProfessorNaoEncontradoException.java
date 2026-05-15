@@ -1,6 +1,5 @@
-package io.github.HugoPinto.exception;
+package io.github.HugoPinto.exception.professorexception;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

@@ -1,6 +1,6 @@
-package io.github.HugoPinto.dao;
+package io.github.HugoPinto.dao.professordao;
 
-import io.github.HugoPinto.model.ProfessorModel;
+import io.github.HugoPinto.model.professormodel.ProfessorModel;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

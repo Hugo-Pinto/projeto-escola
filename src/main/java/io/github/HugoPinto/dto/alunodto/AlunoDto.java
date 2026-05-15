@@ -1,7 +1,7 @@
-package io.github.HugoPinto.dto;
+package io.github.HugoPinto.dto.alunodto;
 
-import io.github.HugoPinto.facade.AlunoFacade;
-import io.github.HugoPinto.model.AlunoModel;
+import io.github.HugoPinto.dto.TurmaResumoDto;
+import io.github.HugoPinto.model.alunomodel.AlunoModel;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+
+import java.util.List;
 
 
 
@@ -46,9 +48,22 @@ public class AlunoDto {
 
     private int idade;
 
+    private List<TurmaResumoDto> turmas;
+
     //construtor que recebe uma model como argumento e instancia o objeto
     //Basicamente, converte o findByiD da model/DAO para o DTO.
-    public AlunoDto(AlunoModel aluno){
-        this(aluno.getId(), aluno.getNome(), aluno.getEmail(), aluno.getCpf(), aluno.getMatricula(), aluno.getCurso(), aluno.getIdade());
+    public AlunoDto(AlunoModel aluno) {
+        this.id = aluno.getId();
+        this.nome = aluno.getNome();
+        this.email = aluno.getEmail();
+        this.cpf = aluno.getCpf();
+        this.matricula = aluno.getMatricula();
+        this.curso = aluno.getCurso();
+        this.idade = aluno.getIdade();
+
+        // Conversão segura da turma
+        this.turmas = aluno.getTurmas().stream()
+                .map(TurmaResumoDto::new)
+                .toList();
     }
 }
