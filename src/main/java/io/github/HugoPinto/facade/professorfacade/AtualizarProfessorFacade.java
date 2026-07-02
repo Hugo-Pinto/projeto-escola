@@ -6,12 +6,17 @@ import io.github.HugoPinto.dto.professordto.ProfessorDto;
 import io.github.HugoPinto.exception.professorexception.ProfessorNaoEncontradoException;
 import io.github.HugoPinto.model.professormodel.ProfessorModel;
 import io.github.HugoPinto.model.turmamodel.TurmaModel;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
+@ApplicationScoped
 public class AtualizarProfessorFacade {
 
     @Inject
@@ -20,6 +25,7 @@ public class AtualizarProfessorFacade {
     @Inject
     TurmaDao turmaDao;
 
+    @Transactional
     public ProfessorDto executar(Long id, ProfessorDto dto){
         validarProfessor(id, dto);
 

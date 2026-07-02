@@ -15,8 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@ApplicationScoped
 @Slf4j
+@ApplicationScoped
 public class CriarProfessorFacade {
 
     @Inject
@@ -55,15 +55,15 @@ public class CriarProfessorFacade {
 
     private ProfessorDto cadastrarProfessor(ProfessorDto professorDto){
 
-            ProfessorModel professor = toEntity(professorDto);
+        ProfessorModel professor = toEntity(professorDto);
 
-            log.info("Cadastrando o professor {} na base de dados!", professor);
+        log.info("Cadastrando o professor {} na base de dados!", professor);
 
-            professorDao.persist(professor);
+        professorDao.persist(professor);
 
-            log.info("Professor de id {} cadastrado com sucesso!", professor.getId());
+        log.info("Professor de id {} cadastrado com sucesso!", professor.getId());
 
-            return new ProfessorDto(professor);
+        return new ProfessorDto(professor);
     }
 
 
@@ -91,4 +91,5 @@ public class CriarProfessorFacade {
         return entity;
     }
 }
+
 

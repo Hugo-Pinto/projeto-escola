@@ -1,7 +1,8 @@
 package io.github.HugoPinto.rest.alunorest;
 
-import io.github.HugoPinto.dto.alunodto.AlunoDto;
-import io.github.HugoPinto.facade.alunofacade.AlunoFacade;
+import io.github.HugoPinto.dto.alunodto.AlunoRequestDto;
+import io.github.HugoPinto.dto.alunodto.AlunoResponseDto;
+import io.github.HugoPinto.facade.alunofacade.*;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -15,15 +16,43 @@ import java.util.List;
 public class AlunoRest {
 
     @Inject
-    AlunoFacade alunoFacade;
+    AtualizarAlunoFacade atualizarAlunoFacade;
+
+    @Inject
+    CriarAlunoFacade criarAlunoFacade;
+
+    @Inject
+    ExcluirAlunoFacade excluirAlunoFacade;
+
+    @Inject
+    ListarAlunoFacade listarAlunoFacade;
+
+    @Inject
+    ListarTodosAlunosFacade listarTodosAlunosFacade;
 
     @Inject
     UriInfo uriInfo;
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/criar")
+    public Response criarAluno(AlunoRequestDto aluno) {
+        AlunoResponseDto alunoRequestDto = criarAlunoFacade.executar(aluno);
+
+        var uri = uriInfo.getAbsolutePathBuilder()
+                .path(alunoRequestDto.getId().toString())
+                .build();
+
+        return Response.
+                created(uri).
+                entity(alunoRequestDto).
+                build();
+    }
+
     @GET
     @Path("/{id}")
-    public Response listarAluno(@PathParam("id") long id){
-        AlunoDto aluno = alunoFacade.encontrarAluno(id);
+    public Response listarAluno(@PathParam("id") long id) {
+        AlunoResponseDto aluno = listarAlunoFacade.executar(id);
 
         if (aluno != null) {
             return Response.
@@ -31,110 +60,32 @@ public class AlunoRest {
                     entity(aluno).
                     build();
         }
-            return Response.status(Response.Status.NOT_FOUND).build();
-    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/criar")
-    public Response criarAluno(AlunoDto aluno){
-        if (aluno == null) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
-
-        AlunoDto criado = alunoFacade.cadastrarAluno(aluno);
-
-        var uri = uriInfo.getAbsolutePathBuilder()
-                .path(criado.getId().toString())
-                .build();
-
-        return Response.
-                created(uri).
-                entity(criado).
-                build();
-    }
-
-    @DELETE
-    @Path("/{id}")
-    public Response apagarAluno(@PathParam("id") long id){
-
-        AlunoDto aluno = alunoFacade.apagarAluno(id);
-
-        if (aluno == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
-        var uri = uriInfo.getAbsolutePathBuilder()
-                .path(aluno.getId().toString())
-                .build();
-
-        return Response.
-                created(uri).
-                entity(aluno).
-                build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarTodosAlunos(){
-        List<AlunoDto> alunos = alunoFacade.listarTodosAlunos();
-
-        if(alunos != null){
-            return Response.ok(alunos).build();
-        }
-        return Response.status(Response.Status.NOT_FOUND).build();
+    public Response listarTodosAlunos() {
+        List<AlunoResponseDto> alunos = listarTodosAlunosFacade.executar();
+        return Response.ok(alunos).build();   // se estiver vazio, retorna lista vazia
     }
+
+    @PUT
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizarAluno(@PathParam("id") long id, AlunoRequestDto alunoDto) {
+        AlunoResponseDto aluno = atualizarAlunoFacade.executar(id, alunoDto);
+        return Response.ok(aluno).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response excluirAluno(@PathParam("id") long id) {
+        AlunoResponseDto aluno = excluirAlunoFacade.executar(id);
+
+        return aluno != null
+                ? Response.ok(aluno).build()  // ou 204 se preferir não retornar nada
+                : Response.status(Response.Status.NOT_FOUND).build();
+    }
+
 }
-
-
-/*
-SHIFT + ALT + SETINHA MEXE A LINHA
-
-CTRL + / comenta o código com barras
-CTRL + SHIFT + / comenta o código com comentário de multiplas linhas
-
-
-No Quarkus, REST geralmente significa uma classe anotada com:
-
-@Path("/clientes")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-
-Ela é a porta de entrada HTTP da sua aplicação.
-
-Ela NÃO contém regra de negócio.
-
-Ela serve para:
-
-Receber requisição HTTP
-
-Validar entrada
-
-Converter JSON → DTO
-
-Chamar a camada de serviço/facade
-
-Retornar resposta HTTP
-
-Exemplo mental:
-
-Usuário → HTTP → REST → Service → Repository → Banco
-
-Se a REST expõe endpoints, o Client consome endpoints.
-
-
-
-Use @QueryParam quando:
-
-O parâmetro for opcional
-
-For um filtro
-
-For paginação
-
-Ordenação
-
-Pesquisa
-
-Define um Path, consome e produz um json com os dados, dados esses sendo por exemplo neste caso, um objeto DTO de um perfil
- */

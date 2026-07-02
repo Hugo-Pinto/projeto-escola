@@ -16,7 +16,7 @@ public class ExcluirProfessorFacade {
     @Inject
     ProfessorDao professorDao;
 
-
+    @Transactional
     public ProfessorDto executar(Long id) {
         validarProfessor(id);
         return excluirProfessor(id);
@@ -30,7 +30,6 @@ public class ExcluirProfessorFacade {
             }
     }
 
-    @Transactional
     private ProfessorDto excluirProfessor(Long id){
 
         ProfessorModel professorModel = professorDao

@@ -16,12 +16,11 @@ public class TurmaFacade {
     @Inject
     TurmaDao turmaDao;
 
-
+    @Transactional
     public TurmaDto executar(TurmaDto turmaDto){
         return cadastrarTurma(turmaDto);
     }
 
-    @Transactional
     private TurmaDto cadastrarTurma(TurmaDto turmaDto){
         if(turmaDto != null){
             var turma = new TurmaModel();
@@ -29,7 +28,8 @@ public class TurmaFacade {
             log.info("Cadastrando turma na base de dados!");
 
             turma.setCodigo(turmaDto.getCodigo());
-            turma.setData(turmaDto.getData());
+            turma.setDataInicio(turmaDto.getDataInicio());
+            turma.setDataFim(turmaDto.getDataFim());
             turma.setNome(turmaDto.getNome());
             turma.setSemestre(turmaDto.getSemestre());
             //turma.setProfessor(turmaDto.getProfessor());

@@ -22,8 +22,11 @@ public class TurmaDto {
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
-    @NotBlank(message = "Data é obrigatório")
-    private LocalDate data;
+    @NotBlank(message = "Data de início e obrigatorio")
+    private LocalDate DataInicio;
+
+    @NotBlank(message = "Data fim é obrigatório")
+    private LocalDate DataFim;
 
     @NotBlank(message = "Semestre é obrigatório")
     private Semestre semestre;

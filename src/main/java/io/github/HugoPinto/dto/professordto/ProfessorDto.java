@@ -1,4 +1,5 @@
 package io.github.HugoPinto.dto.professordto;
+
 import io.github.HugoPinto.dto.TurmaResumoDto;
 import io.github.HugoPinto.model.professormodel.ProfessorModel;
 import jakarta.validation.constraints.Email;
@@ -61,4 +62,5 @@ public class ProfessorDto {
         this.turmas = professor.getTurmas().stream()
                 .map(TurmaResumoDto::new)
                 .toList();
+    }
 }
