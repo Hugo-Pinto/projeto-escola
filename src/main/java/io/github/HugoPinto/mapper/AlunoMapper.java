@@ -3,6 +3,7 @@ package io.github.HugoPinto.mapper;
 import io.github.HugoPinto.dto.alunodto.AlunoRequestDto;
 import io.github.HugoPinto.dto.alunodto.AlunoResponseDto;
 import io.github.HugoPinto.model.alunomodel.AlunoModel;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -12,8 +13,9 @@ import java.util.List;
 @Mapper(
         componentModel = "cdi",
         uses = TurmaMapper.class,
-        injectionStrategy = org.mapstruct.InjectionStrategy.CONSTRUCTOR
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR
 )
+
 public interface AlunoMapper {
 
     @Mapping(target = "turmas", ignore = true)

@@ -2,13 +2,18 @@ package io.github.HugoPinto.mapper;
 
 import io.github.HugoPinto.dto.TurmaResumoDto;
 import io.github.HugoPinto.model.turmamodel.TurmaModel;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.Set;
 
-@Mapper(componentModel = "cdi")
+@Mapper(
+        componentModel = "cdi",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR
+)
+
 public interface TurmaMapper {
 
     @Mapping(source = "professor.nome", target = "professor")
